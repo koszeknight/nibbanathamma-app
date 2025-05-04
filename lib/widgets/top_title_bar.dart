@@ -7,7 +7,6 @@ class TopTitleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
       decoration: BoxDecoration(
           color: Color.fromARGB(
               236, 255, 223, 83)), // Background color of the top bar
