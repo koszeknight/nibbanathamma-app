@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nibbana_dhamma/pages/audio_page.dart';
 import 'package:nibbana_dhamma/pages/books_page.dart';
@@ -9,6 +10,15 @@ import 'package:nibbana_dhamma/pages/links_page.dart';
 import 'package:nibbana_dhamma/pages/video_page.dart';
 
 void main() {
+  if (kDebugMode) {
+    debugPrint = (String? message, {int? wrapWidth}) {
+      if (message != null &&
+          !message.contains('Attempt to remove non-JNI local reference') &&
+          !message.contains('EGL_emulation')) {
+        debugPrintThrottled(message, wrapWidth: wrapWidth);
+      }
+    };
+  }
   runApp(const MyApp());
 }
 
