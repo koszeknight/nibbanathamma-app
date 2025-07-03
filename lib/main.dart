@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:nibbana_dhamma/firebase/firebase_init.dart';
+
 import 'package:nibbana_dhamma/pages/audio_page.dart';
 import 'package:nibbana_dhamma/pages/books_page.dart';
 import 'package:nibbana_dhamma/pages/contacts_page.dart';
@@ -9,7 +11,10 @@ import 'package:nibbana_dhamma/pages/home_page.dart';
 import 'package:nibbana_dhamma/pages/links_page.dart';
 import 'package:nibbana_dhamma/pages/video_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeFirebase();
+
   if (kDebugMode) {
     debugPrint = (String? message, {int? wrapWidth}) {
       if (message != null &&

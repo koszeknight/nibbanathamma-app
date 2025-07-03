@@ -1,3 +1,16 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.1'  // Flutter uses this
+        classpath 'com.google.gms:google-services:4.3.15'  // Firebase plugin
+        // Add other plugins here (e.g., Crashlytics)
+    }
+}
+
+
 allprojects {
     repositories {
         google()
@@ -16,3 +29,6 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+
+apply plugin: 'com.google.gms.google-services'

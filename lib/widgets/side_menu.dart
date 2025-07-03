@@ -13,6 +13,8 @@ class _SideMenuState extends State<SideMenu> {
   final sideMenuData = SideMenuData();
 
   void _navigate(String routeName) {
+    // Close the drawer before navigating
+    Navigator.of(context).pop(); // This closes the drawer
     Navigator.pushNamed(context, routeName);
   }
 
@@ -20,7 +22,7 @@ class _SideMenuState extends State<SideMenu> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      color: Colors.black26,
+      color: const Color.fromARGB(213, 53, 53, 53),
       child: ListView.builder(
           itemCount: sideMenuData.sideMenu.length,
           itemBuilder: (context, index) {
@@ -35,7 +37,6 @@ class _SideMenuState extends State<SideMenu> {
         setState(() {
           selectedIdex = index;
           _navigate(sideMenuData.sideMenu[index].routeName);
-          // navigator(sideMenuData.sideMenu[index].title, context);
         });
       },
       child: Container(
@@ -67,13 +68,4 @@ class _SideMenuState extends State<SideMenu> {
       ),
     );
   }
-
-  // static navigator(String navigatePage, context) {
-  //   if (navigatePage == "Audio Deshana") {
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => const AudioPage()),
-  //     );
-  //   }
-  // }
 }
