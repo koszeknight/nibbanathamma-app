@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EventCard extends StatelessWidget {
   final String title;
@@ -6,11 +7,10 @@ class EventCard extends StatelessWidget {
   final String contact;
   final String eventDate;
   final String? imageUrl;
-  final double? cardWidth; // Only for card width control
+  final double? cardWidth;
 
-  // Hardcoded image dimensions (adjust as needed)
-  static const double imageHeight = 120;
-  static const double imageWidth = 90; // Full card width
+  static const double imageHeight = 132;
+  static const double imageWidth = 95;
 
   const EventCard({
     super.key,
@@ -21,6 +21,19 @@ class EventCard extends StatelessWidget {
     this.imageUrl,
     this.cardWidth,
   });
+
+  Future<void> _launchUrl(BuildContext context) async {
+    if (imageUrl == null) return;
+
+    final Uri url = Uri.parse(imageUrl!);
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not launch the URL')),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,28 +48,29 @@ class EventCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Image with FIXED dimensions
+            const SizedBox(height: 8),
             if (imageUrl != null)
-              SizedBox(
-                height: imageHeight, // Hardcoded height
-                width: imageWidth, // Hardcoded width
-                child: ClipRRect(
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(12)),
-                  child: Image.network(
-                    imageUrl!,
-                    fit: BoxFit.cover, // Crop to fill the space
-                    errorBuilder: (context, error, stackTrace) => Container(
-                      height: imageHeight,
-                      width: imageWidth,
-                      color: Colors.grey[200],
-                      child: const Icon(Icons.image_not_supported),
+              InkWell(
+                onTap: () => _launchUrl(context),
+                child: SizedBox(
+                  height: imageHeight,
+                  width: imageWidth,
+                  child: ClipRRect(
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(12)),
+                    child: Image.network(
+                      imageUrl!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        height: imageHeight,
+                        width: imageWidth,
+                        color: Colors.grey[200],
+                        child: const Icon(Icons.image_not_supported),
+                      ),
                     ),
                   ),
                 ),
               ),
-
-            // Rest of the card (unchanged)
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -85,7 +99,6 @@ class EventCard extends StatelessWidget {
     );
   }
 
-  // Helper method
   Widget _buildInfoRow({required IconData icon, required String text}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

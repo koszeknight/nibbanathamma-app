@@ -60,84 +60,89 @@ class HomePage extends StatelessWidget {
                               SizedBox(height: isPortrait ? 20 : 10),
                             ],
                           ),
+
+                          // Second part - Events ListView from Firebase
+                          Container(
+                            height: 400,
+                            color: Colors.grey[100],
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: horizontalPadding,
+                                    vertical: 8,
+                                  ),
+                                  child: Text(
+                                    'Upcoming Events',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.deepOrange,
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: StreamBuilder<QuerySnapshot>(
+                                    stream: FirebaseFirestore.instance
+                                        .collection('events')
+                                        .orderBy('date',
+                                            descending:
+                                                false) // Sort by date if you have it
+                                        .snapshots(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasError) {
+                                        return Center(
+                                            child: Text(
+                                                'Error: ${snapshot.error}'));
+                                      }
+
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Center(
+                                            child: CircularProgressIndicator());
+                                      }
+
+                                      if (snapshot.data!.docs.isEmpty) {
+                                        return Center(
+                                            child: Text('No upcoming events'));
+                                      }
+
+                                      final events = snapshot.data!.docs
+                                          .map(
+                                              (doc) => Event.fromFirestore(doc))
+                                          .toList();
+
+                                      return ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: horizontalPadding),
+                                        itemCount: events.length,
+                                        itemBuilder: (context, index) {
+                                          final event = events[index];
+                                          return Container(
+                                            width: 300,
+                                            margin: EdgeInsets.only(right: 12),
+                                            child: EventCard(
+                                              title: event.title,
+                                              location: event.location,
+                                              contact: event.contact,
+                                              imageUrl: event.imageUrl,
+                                              eventDate: event.eventDate,
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 12),
                         ],
                       ),
                     ),
-                  ),
-                ),
-
-                // Second part - Events ListView from Firebase
-                Container(
-                  height: 350,
-                  color: Colors.grey[100],
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: horizontalPadding,
-                          vertical: 8,
-                        ),
-                        child: Text(
-                          'Upcoming Events',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.deepOrange,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance
-                              .collection('events')
-                              .orderBy('date',
-                                  descending:
-                                      false) // Sort by date if you have it
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return Center(
-                                  child: Text('Error: ${snapshot.error}'));
-                            }
-
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Center(child: CircularProgressIndicator());
-                            }
-
-                            if (snapshot.data!.docs.isEmpty) {
-                              return Center(child: Text('No upcoming events'));
-                            }
-
-                            final events = snapshot.data!.docs
-                                .map((doc) => Event.fromFirestore(doc))
-                                .toList();
-
-                            return ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: horizontalPadding),
-                              itemCount: events.length,
-                              itemBuilder: (context, index) {
-                                final event = events[index];
-                                return Container(
-                                  width: 300,
-                                  margin: EdgeInsets.only(right: 12),
-                                  child: EventCard(
-                                    title: event.title,
-                                    location: event.location,
-                                    contact: event.contact,
-                                    imageUrl: event.imageUrl,
-                                    eventDate: event.eventDate,
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ],
