@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class DetailsCard extends StatelessWidget {
   final String title;
   final String decription;
+  final String ImagePath;
   final Color bgColor;
 
   const DetailsCard(
       {super.key,
       required this.title,
+      required this.ImagePath,
       required this.decription,
       required this.bgColor});
 
@@ -32,6 +34,18 @@ class DetailsCard extends StatelessWidget {
                 child: Text(
                   title,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset(
+                  ImagePath,
+                  width: double.infinity,
+                  height: 200,
+                  fit: BoxFit.contain,
                 ),
               ),
               SizedBox(
