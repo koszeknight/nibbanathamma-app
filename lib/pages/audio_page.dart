@@ -57,44 +57,48 @@ class _AudioPageState extends State<AudioPage> {
             ],
           ),
         ),
-        body: Column(
-          children: [
-            // Search Bar
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  hintText: "Search deshanas...",
-                  prefixIcon: const Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+        body: Padding(
+          padding: const EdgeInsets.only(top: 12.0), // Added top padding instead of Column
+          child: Column(
+            children: [
+              // Search Bar - moved outside of TabBarView
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: "Search deshanas...",
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  // Basic Teachings Tab
-                  _buildDeshanaTab(
-                    deshanas: _filterDeshanas(basicDeshanas),
-                    sectionTitle: "මූලික දේශනා",
-                    bgColor: const Color.fromARGB(255, 194, 184, 154),
-                    cardColor: Colors.orange[100]!,
-                  ),
+              const SizedBox(height: 8),
+              Expanded( // This Expanded wraps the TabBarView
+                child: TabBarView(
+                  children: [
+                    // Basic Teachings Tab
+                    _buildDeshanaTab(
+                      deshanas: _filterDeshanas(basicDeshanas),
+                      sectionTitle: "මූලික දේශනා",
+                      bgColor: const Color.fromARGB(255, 194, 184, 154),
+                      cardColor: Colors.orange[100]!,
+                    ),
 
-                  // Advanced Teachings Tab
-                  _buildDeshanaTab(
-                    deshanas: _filterDeshanas(advancedDeshanas),
-                    sectionTitle: "සූත්‍ර දේශනා",
-                    bgColor: const Color.fromARGB(255, 184, 194, 154),
-                    cardColor: Colors.green[100]!,
-                  ),
-                ],
+                    // Advanced Teachings Tab
+                    _buildDeshanaTab(
+                      deshanas: _filterDeshanas(advancedDeshanas),
+                      sectionTitle: "සූත්‍ර දේශනා",
+                      bgColor: const Color.fromARGB(255, 184, 194, 154),
+                      cardColor: Colors.green[100]!,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
