@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:nibbana_dhamma/utils/app_url_launcher.dart';
 
 class VideoPage extends StatefulWidget {
   const VideoPage({super.key});
@@ -21,28 +21,18 @@ class VideoPageData {
   });
 
   factory VideoPageData.fromFirestore(DocumentSnapshot doc) {
-    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    final data = doc.data() as Map<String, dynamic>? ?? {};
     return VideoPageData(
-      name: data['Name'] ?? '',
-      imgUrl: data['imgUrl'] ?? '',
-      link: data['link'] ?? '',
+      name: data['Name']?.toString() ?? '',
+      imgUrl: data['imgUrl']?.toString() ?? '',
+      link: data['link']?.toString() ?? '',
     );
   }
 }
 
 class _VideoPageState extends State<VideoPage> {
-  Future<void> _launchYouTubeChannel(String url) async {
-    final Uri uri = Uri.parse(url);
-    try {
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(
-          uri,
-          mode: LaunchMode.externalApplication,
-        );
-      }
-    } catch (e) {
-      print('Error launching URL: $e');
-    }
+  Future<void> _launchYouTubeChannel(String url, {String? name}) async {
+    await AppUrlLauncher.openYouTubeUrl(context, url, title: name ?? 'YouTube Video');
   }
 
   @override
@@ -75,7 +65,7 @@ class _VideoPageState extends State<VideoPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withValues(alpha: 0.2),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -142,7 +132,10 @@ class _VideoPageState extends State<VideoPage> {
                       name: channel.name,
                       imageUrl: channel.imgUrl,
                       youtubeLink: channel.link,
-                      onTap: () => _launchYouTubeChannel(channel.link),
+                      onTap: () => _launchYouTubeChannel(
+                        channel.link,
+                        name: channel.name,
+                      ),
                     ),
                   );
                 }).toList(),
@@ -333,7 +326,7 @@ class VideoChannelCard extends StatelessWidget {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.deepOrange.withOpacity(0.1),
+                        color: Colors.deepOrange.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Row(
@@ -373,3 +366,4 @@ class VideoChannelCard extends StatelessWidget {
     );
   }
 }
+

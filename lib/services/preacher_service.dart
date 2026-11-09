@@ -8,7 +8,7 @@ class PreacherService {
   Stream<List<Preacher>> getPreachers() {
     return _firestore
         .collection('document_Preachers')
-        .orderBy('createdAt',
+        .orderBy('order',
             descending: false) // Changed to false for oldest first
         .snapshots()
         .map((snapshot) =>

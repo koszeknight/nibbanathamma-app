@@ -7,6 +7,44 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:89415164093:android:22eb95e57bb99d7f8317d4",
+        "android_client_info": {
+          "package_name": "app.symax.nibbana_dhamma"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOUMqVuuu-LTqi2S3s5bNF3DvNNFyvzus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:89415164093:android:51fce6d800243b578317d4",
+        "android_client_info": {
+          "package_name": "com.example.nb_event_manage_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOUMqVuuu-LTqi2S3s5bNF3DvNNFyvzus"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:89415164093:android:0603ac9db3ee2bf38317d4",
         "android_client_info": {
           "package_name": "com.example.nibbana_dhamma"

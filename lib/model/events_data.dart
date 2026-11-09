@@ -20,15 +20,20 @@ class Event {
   });
 
   factory Event.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
+    final data = doc.data() as Map<String, dynamic>? ?? {};
+    DateTime? parsedDate;
+    final rawDate = data['date'];
+    if (rawDate is Timestamp) {
+      parsedDate = rawDate.toDate();
+    }
     return Event(
       id: doc.id,
-      title: data['title'] ?? 'No Title',
-      location: data['location'] ?? 'Unknown Location',
-      contact: data['contact'] ?? 'No Contact',
-      imageUrl: data['imageURL'],
-      eventDate: data['eventDate'] ?? "No EventDate",
-      date: data['date']?.toDate(),
+      title: data['title']?.toString() ?? 'No Title',
+      location: data['location']?.toString() ?? 'Unknown Location',
+      contact: data['contact']?.toString() ?? 'No Contact',
+      imageUrl: data['imageURL']?.toString(),
+      eventDate: data['eventDate']?.toString() ?? "No EventDate",
+      date: parsedDate,
     );
   }
 }

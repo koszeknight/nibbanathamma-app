@@ -29,7 +29,7 @@ class TopTitleBar extends StatelessWidget {
                       color: const Color.fromARGB(255, 146, 64, 9),
                     ),
                     child: const Icon(
-                      Icons.menu,
+                      Icons.apps,
                       size: 24,
                       color: Colors.white,
                     ),
