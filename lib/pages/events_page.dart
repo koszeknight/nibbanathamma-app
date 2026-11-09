@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:nibbana_dhamma/model/events_data.dart';
 import 'package:nibbana_dhamma/widgets/events_cards.dart';
+import 'package:nibbana_dhamma/utils/app_url_launcher.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -22,11 +22,11 @@ class _EventsPageState extends State<EventsPage> {
   final List<String> _viewOptions = ['Month', 'Week', 'Day'];
   final Map<String, String> _viewUrls = {
     'Month':
-        'https://calendar.google.com/calendar/embed?src=koszeknight%40gmail.com&mode=MONTH',
+        'https://calendar.google.com/calendar/embed?src=userdwork%40gmail.com&mode=MONTH',
     'Week':
-        'https://calendar.google.com/calendar/embed?src=koszeknight%40gmail.com&mode=WEEK',
+        'https://calendar.google.com/calendar/embed?src=userdwork%40gmail.com&mode=WEEK',
     'Day':
-        'https://calendar.google.com/calendar/embed?src=koszeknight%40gmail.com&mode=DAY',
+        'https://calendar.google.com/calendar/embed?src=userdwork%40gmail.com&mode=DAY',
   };
 
   @override
@@ -42,69 +42,42 @@ class _EventsPageState extends State<EventsPage> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (int progress) {
-            print('Loading: $progress%');
+            // Loading progress
           },
           onPageStarted: (String url) {
-            setState(() {
-              _isLoading = true;
-              _hasError = false;
-            });
+            if (mounted) {
+              setState(() {
+                _isLoading = true;
+                _hasError = false;
+              });
+            }
           },
           onPageFinished: (String url) {
-            setState(() {
-              _isLoading = false;
-            });
+            if (mounted) {
+              setState(() {
+                _isLoading = false;
+              });
+            }
           },
           onWebResourceError: (WebResourceError error) {
-            setState(() {
-              _isLoading = false;
-              _hasError = true;
-            });
-            print('WebView error: ${error.description}');
+            if (mounted) {
+              setState(() {
+                _isLoading = false;
+                _hasError = true;
+              });
+            }
           },
           onNavigationRequest: (NavigationRequest request) {
-            // Block all navigation within WebView and launch externally
-            if (request.url.contains('calendar.google.com') &&
-                !request.url.contains('/embed')) {
-              // Launch in external app/browser
-              _launchExternalCalendar(request.url);
-              return NavigationDecision.prevent;
+            // Keep all browsing strictly inside the webview without external handoff
+            if (request.url.startsWith('http://') ||
+                request.url.startsWith('https://')) {
+              return NavigationDecision.navigate;
             }
-            return NavigationDecision.navigate;
+            return NavigationDecision.prevent;
           },
         ),
       )
       ..loadRequest(Uri.parse(_viewUrls[_viewOptions[_currentViewIndex]]!));
-  }
-
-  Future<void> _launchExternalCalendar(String url) async {
-    final Uri uri = Uri.parse(url);
-
-    try {
-      if (await canLaunchUrl(uri)) {
-        await launchUrl(
-          uri,
-          mode: LaunchMode
-              .externalApplication, // Opens in Google Calendar app or browser
-        );
-      } else {
-        // Fallback: Try to open the main calendar
-        await _openMainCalendar();
-      }
-    } catch (e) {
-      print('Error launching URL: $e');
-      await _openMainCalendar();
-    }
-  }
-
-  Future<void> _openMainCalendar() async {
-    final Uri calendarUri = Uri.parse('https://calendar.google.com/calendar/');
-    if (await canLaunchUrl(calendarUri)) {
-      await launchUrl(
-        calendarUri,
-        mode: LaunchMode.externalApplication,
-      );
-    }
   }
 
   void _changeCalendarView(int index) {
@@ -115,12 +88,16 @@ class _EventsPageState extends State<EventsPage> {
     _controller.loadRequest(Uri.parse(_viewUrls[_viewOptions[index]]!));
   }
 
-  // Method to open specific date in external calendar
-  void _openDateInExternalCalendar(DateTime date) {
+  void _openDateInCalendar(DateTime date) {
+    setState(() {
+      _currentViewIndex = 2; // Day view
+      _isLoading = true;
+    });
     final formattedDate =
         '${date.year}${date.month.toString().padLeft(2, '0')}${date.day.toString().padLeft(2, '0')}';
-    final url = 'https://calendar.google.com/calendar/r/day/$formattedDate';
-    _launchExternalCalendar(url);
+    final url =
+        'https://calendar.google.com/calendar/embed?src=userdwork%40gmail.com&mode=DAY&dates=$formattedDate/$formattedDate';
+    _controller.loadRequest(Uri.parse(url));
   }
 
   @override
@@ -164,7 +141,7 @@ class _EventsPageState extends State<EventsPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withValues(alpha: 0.2),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -178,7 +155,7 @@ class _EventsPageState extends State<EventsPage> {
               Icon(Icons.event_available, color: Colors.deepOrange, size: 24),
               const SizedBox(width: 8),
               Text(
-                'Upcoming Events',
+                'ඉදිරි දේශනා',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -191,7 +168,7 @@ class _EventsPageState extends State<EventsPage> {
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection('events')
-                .orderBy('date', descending: false)
+                .orderBy('order', descending: false)
                 .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
@@ -241,7 +218,7 @@ class _EventsPageState extends State<EventsPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withValues(alpha: 0.2),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -412,7 +389,7 @@ class _EventsPageState extends State<EventsPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.grey.withValues(alpha: 0.2),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -436,19 +413,25 @@ class _EventsPageState extends State<EventsPage> {
               _buildActionButton(
                 icon: Icons.calendar_today,
                 label: 'Open Today',
-                onTap: () => _openDateInExternalCalendar(DateTime.now()),
+                onTap: () => _openDateInCalendar(DateTime.now()),
               ),
               _buildActionButton(
                 icon: Icons.open_in_new,
                 label: 'Full Calendar',
-                onTap: () => _launchExternalCalendar(
-                    'https://calendar.google.com/calendar/'),
+                onTap: () => AppUrlLauncher.openUrl(
+                  context,
+                  'https://calendar.google.com/calendar/',
+                  title: 'Full Calendar',
+                ),
               ),
               _buildActionButton(
                 icon: Icons.add,
                 label: 'Add Event',
-                onTap: () => _launchExternalCalendar(
-                    'https://calendar.google.com/calendar/r/eventedit'),
+                onTap: () => AppUrlLauncher.openUrl(
+                  context,
+                  'https://calendar.google.com/calendar/r/eventedit',
+                  title: 'Add Calendar Event',
+                ),
               ),
             ],
           ),
@@ -471,9 +454,9 @@ class _EventsPageState extends State<EventsPage> {
             width: 60,
             height: 60,
             decoration: BoxDecoration(
-              color: Colors.deepOrange.withOpacity(0.1),
+              color: Colors.deepOrange.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.deepOrange.withOpacity(0.3)),
+              border: Border.all(color: Colors.deepOrange.withValues(alpha: 0.3)),
             ),
             child: Icon(
               icon,
@@ -560,3 +543,4 @@ class _EventsPageState extends State<EventsPage> {
     );
   }
 }
+

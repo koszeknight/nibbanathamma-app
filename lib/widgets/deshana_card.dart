@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:nibbana_dhamma/utils/app_url_launcher.dart';
 
 class AudioPageCard extends StatelessWidget {
   final String title;
@@ -13,14 +13,8 @@ class AudioPageCard extends StatelessWidget {
     required this.bgColor,
   });
 
-  Future<void> _openAudioInBrowser() async {
-    final uri = Uri.parse(audioUrl);
-    if (!await launchUrl(
-      uri,
-      mode: LaunchMode.externalApplication,
-    )) {
-      throw Exception('Could not launch $audioUrl');
-    }
+  Future<void> _openAudioInApp(BuildContext context) async {
+    await AppUrlLauncher.openUrl(context, audioUrl, title: title);
   }
 
   @override
@@ -34,7 +28,7 @@ class AudioPageCard extends StatelessWidget {
       color: bgColor,
       child: InkWell(
         borderRadius: BorderRadius.circular(20),
-        onTap: _openAudioInBrowser,
+        onTap: () => _openAudioInApp(context),
         child: Padding(
           padding: const EdgeInsets.all(3),
           child: Row(

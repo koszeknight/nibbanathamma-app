@@ -4,22 +4,25 @@ import 'package:nibbana_dhamma/model/side_menu.dart';
 class SideMenuData {
   final sideMenu = <SideMenu>[
     SideMenu(
-        icon: Icons.audio_file, title: "ශ්‍රවන දේශනා", routeName: '/audio'),
+        icon: Icons.audio_file, title: "ශ්‍රවණ දේසනා", routeName: '/audio'),
     SideMenu(
         icon: Icons.video_file_rounded,
-        title: "Video දේශනා",
+        title: "Video දේසනා",
         routeName: '/video'),
-    SideMenu(icon: Icons.book_sharp, title: "ධර්ම පුස්ථක", routeName: '/books'),
+    SideMenu(icon: Icons.book_sharp, title: "ධම්ම පුස්තක", routeName: '/books'),
     SideMenu(
         icon: Icons.event_available,
-        title: "ඉදිරි දේශනා",
+        title: "ඉදිරි දේසනා",
         routeName: '/events'),
     SideMenu(
         icon: Icons.history_edu_sharp,
-        title: "හෙල ඉතිහාසය",
+        title: "හෙළ ඉතිහාසය",
         routeName: '/history'),
-    SideMenu(icon: Icons.link, title: "ධම්ම වැඩසටහන්", routeName: '/programs'),
-    SideMenu(icon: Icons.link, title: "දේශකයනෝ", routeName: '/preachers'),
-    SideMenu(icon: Icons.dock_outlined, title: "වි්ස්තර", routeName: '/about'),
+    SideMenu(icon: Icons.event, title: "ධම්ම වැඩසටහන්", routeName: '/programs'),
+    SideMenu(
+        icon: Icons.person_3_rounded,
+        title: "දේශකයන් වහන්සේලා",
+        routeName: '/preachers'),
+    SideMenu(icon: Icons.dock_outlined, title: "විස්තර", routeName: '/about'),
   ];
 }

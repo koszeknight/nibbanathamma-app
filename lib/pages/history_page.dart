@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:nibbana_dhamma/model/linkList.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:nibbana_dhamma/model/link_list.dart';
 import 'package:nibbana_dhamma/pages/home_page.dart';
 import 'package:nibbana_dhamma/utills/colors.dart';
-import 'package:nibbana_dhamma/widgets/details_cardHistory.dart';
-import 'package:nibbana_dhamma/widgets/linkCardsItems.dart';
+import 'package:nibbana_dhamma/widgets/details_card_history.dart';
+import 'package:nibbana_dhamma/widgets/link_cards_items.dart';
 
 class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
@@ -14,7 +14,7 @@ class HistoryPage extends StatelessWidget {
     final isPortrait = screenSize.height > screenSize.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hela Buddhist History"),
+        title: Text("හෙළ බොදු ඉතිහාසය"),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -22,9 +22,9 @@ class HistoryPage extends StatelessWidget {
           child: Column(
             children: [
               ResponsiveDetailsCard(
-                title: "වර්ථමානයේ හෙල ‌බෙදු ඉතිහාසය වැදගත් වන්නේ ඇයි ?",
+                title: "වර්ථමානයේ හෙළ බොදු ඉතිහාසය වැදගත් වන්නේ ඇයි ?",
                 description:
-                    "වර්ථමානයේ නිවන් අවබෝධ කර ගැනීමට පින්පිරූ පිරිසකට චතු අරිය සත්‍ය අවබෝධ කර ගැනීමට සහ බුදුන්වහන්සේ මහා පරිනිබ්බාන සූත්‍රයේ දේශනා කල සද්ධස්සඝ කුලපුත්තස්ස, දස්සනීයානං සංවේජනීයානං තත්වයට පත් වන්නට බුද්ධ ශක්තියට අනුගත වියහැකි ස්ථාන හතර නිවැරදිවත් පිරිසිදුවත් දැනගත යුතුයි.‍එසේම  ඉන්දියානු සම්බවයක් ඇති අටුවාචාරීන් වහන්සේලා අතින් ලියැවුනු අපේ හෙළබිමේ ඉතිහාසය සහ ඊට සමගාමීව විශුද්ධි මාර්ගය ගුරුකොට මේ දක්වා විකාශය වී ඇති බුදු දහම ඒ අයුරින්ම අර්ථකතනය කිරීම තුල සැඟවගිය, නිවන් මගත් හෙළබිමේ නිවැරදිවූත්, ඉතා පැහැදිලි සහ විද්‍යානුකූලවූත් ඉතිහාසය, නිවන් අවබෝධ කර ගැනීමට උපකාරවන ලෙස පරම පවිත්‍ර සිරි සද්ධර්මය ලෙස මතුකොට පෙන්වා දීම අත්‍යව්‍යය.ඉහත දැක්වූ පරිදි මෙලෙස ‌නිවැරදි හෙළ ඉතිහාසට අයත් කරුණු ඔබ සැමට ‌‌ගෙනහැර දක්වන්නේ ඔ‌බේ දහම් ඇස පහද‌ා දීම පිණිසමය.",
+                    "වර්ථමානයේ නිවන් අවබෝධ කර ගැනීමට පින්පිරූ පිරිසකට චතු අරිය සත්‍ය අවබෝධ කර ගැනීමට සහ බුදුන්වහන්සේ මහා පරිනිබ්බාන සූත්‍රයේ දේශනා කල සද්ධස්ස කුලපුත්තස්ස, දස්සනීයානං සංවේජනීයානං තත්වයට පත් වන්නට බුද්ධ ශක්තියට අනුගත වියහැකි ස්ථාන හතර නිවැරදිවත් පිරිසිදුවත් දැනගත යුතුයි.‍එසේම  ඉන්දියානු සම්බවයක් ඇති අටුවාචාරීන් වහන්සේලා අතින් ලියැවුනු අපේ හෙළබිමේ ඉතිහාසය සහ ඊට සමගාමීව විශුද්ධි මාර්ගය ගුරුකොට මේ දක්වා විකාශය වී ඇති බුදු දහම ඒ අයුරින්ම අර්ථකතනය කිරීම තුල සැඟවගිය, නිවන් මගත් හෙළබිමේ නිවැරදිවූත්, ඉතා පැහැදිලි සහ විද්‍යානුකූලවූත් ඉතිහාසය, නිවන් අවබෝධ කර ගැනීමට උපකාරවන ලෙස පරම පවිත්‍ර සිරි සද්ධර්මය ලෙස මතුකොට පෙන්වා දීම අත්‍යව්‍යය.ඉහත දැක්වූ පරිදි මෙලෙස ‌නිවැරදි හෙළ ඉතිහාසට අයත් කරුණු ඔබ සැමට ‌‌ගෙනහැර දක්වන්නේ ඔ‌බේ දහම් ඇස පහද‌ා දීම පිණිසමය.",
                 bgColor: detailCardBgColor,
                 isPortrait: isPortrait,
               ),
@@ -42,7 +42,7 @@ class HistoryPage extends StatelessWidget {
                       ),
                       DetailsCardHistory(
                           title: "1. සිදුහත් කුමරු උපන් ස්ථානය",
-                          ImagePath: "assets/images/Babaragala.jpg",
+                          imagePath: "assets/images/Babaragala.jpg",
                           decription: "බබරගල රජමහා විහාරය - තෙල් දෙනිය",
                           bgColor: const Color.fromARGB(255, 207, 198, 198),
                           placeUrl:
@@ -52,7 +52,7 @@ class HistoryPage extends StatelessWidget {
                       ),
                       DetailsCardHistory(
                           title: "2. උතුම් සම්බුද්ධත්වයට පත් වූ ස්ථානය​",
-                          ImagePath:
+                          imagePath:
                               "assets/images/history/2Sirimahabodhiya.jpg",
                           decription:
                               "හිරිවඩුන්න ශ්‍රී බෝධිරාජ ආරණ්‍ය සේනාසනය - හබරන",
@@ -64,7 +64,7 @@ class HistoryPage extends StatelessWidget {
                       ),
                       DetailsCardHistory(
                           title: "3.ප්‍රථම ධම්ම දේශනය කළ ස්ථානය​",
-                          ImagePath: "assets/images/history/3isinBasagla.jpg",
+                          imagePath: "assets/images/history/3isinBasagla.jpg",
                           decription:
                               "ඉසින්බැස්සගල රුවන්ගිරි රජමහා විහාරය -මැදවච්චිය",
                           bgColor: const Color.fromARGB(255, 207, 198, 198),
@@ -75,10 +75,10 @@ class HistoryPage extends StatelessWidget {
                       ),
                       DetailsCardHistory(
                         title: "4.පරිනිබ්බානයට පත් වූ ස්ථානය​",
-                        ImagePath: "assets/images/history/4budugala.jpg",
+                        imagePath: "assets/images/history/4budugala.jpg",
                         decription: "බුදුගල රජමහා විහාරය - කල්තොට",
                         bgColor: const Color.fromARGB(255, 207, 198, 198),
-                        placeUrl: "https://maps.app.goo.gl/ZAXgd27oNw7ccDse6",
+                        placeUrl: "https://maps.app.goo.gl/4Lpqi8RcRjVQc8daA",
                       ),
                       SizedBox(
                         height: 20,
@@ -98,7 +98,7 @@ class HistoryPage extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("Main Web Sites",
+                      child: Text("Main Web Sites & Youtube Channels",
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -111,7 +111,7 @@ class HistoryPage extends StatelessWidget {
                     //       fontWeight: FontWeight.bold,
                     //     )),
                     // SizedBox(height: 8),
-                    // LinkCardGrid(items: YouLinkItem),
+                    // LinkCardGrid(items: youLinkItem),
                     // SizedBox(height: 8),
                   ],
                 ),
@@ -124,3 +124,4 @@ class HistoryPage extends StatelessWidget {
     );
   }
 }
+

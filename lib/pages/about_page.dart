@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:nibbana_dhamma/utils/app_url_launcher.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -9,21 +9,21 @@ class AboutPage extends StatefulWidget {
 }
 
 class _ContactsPageState extends State<AboutPage> {
-  // Function to launch Google Maps
+  // Function to launch Google Maps in-app
   Future<void> _launchMaps() async {
-    final url = Uri.parse(
-        'https://www.google.com/maps/place/Parama+Nibbana+Dharmayathanaya/@7.2718007,80.1490068,17z/data=!3m1!4b1!4m6!3m5!1s0x3ae31ef2065ea9e9:0x2296b227564d4029!8m2!3d7.2718007!4d80.1515817!16s%2Fg%2F11q5k1f2p0?entry=ttu');
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not launch $url';
-    }
+    const url =
+        'https://www.google.com/maps/place/Parama+Nibbana+Dharmayathanaya/@7.2718007,80.1490068,17z/data=!3m1!4b1!4m6!3m5!1s0x3ae31ef2065ea9e9:0x2296b227564d4029!8m2!3d7.2718007!4d80.1515817!16s%2Fg%2F11q5k1f2p0?entry=ttu';
+    await AppUrlLauncher.openUrl(
+      context,
+      url,
+      title: 'Parama Nibbana Dharmayathanaya',
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("වි්ස්තර")),
+      appBar: AppBar(title: const Text("විස්තර")),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -60,7 +60,7 @@ class _ContactsPageState extends State<AboutPage> {
                         ),
                       ),
                       Text(
-                        "077 1753032 / 072 7012240 / +94 033 2241686 ",
+                        "077 1753032 / 072 7012240 / +94 33 2241686 ",
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -103,7 +103,7 @@ class _ContactsPageState extends State<AboutPage> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Param Nibban Dharmayathanaya",
+                    "Parama Nibbana Dharmayathanaya",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey[700],

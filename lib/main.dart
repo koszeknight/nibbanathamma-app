@@ -10,6 +10,7 @@ import 'package:nibbana_dhamma/pages/home_page.dart';
 import 'package:nibbana_dhamma/pages/programs_page.dart';
 import 'package:nibbana_dhamma/pages/video_page.dart';
 import 'package:nibbana_dhamma/pages/preachers_page.dart';
+import 'package:nibbana_dhamma/widgets/offline_banner_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/', // The route displayed when the app starts
       routes: {
         '/': (context) =>
-            const HomePage(), // Define the route for the home page
+            const OfflineBannerWrapper(child: HomePage()), // Define the route for the home page
         '/audio': (context) => const AudioPage(),
         '/books': (context) => const BooksPage(),
         '/video': (context) => const VideoPage(),

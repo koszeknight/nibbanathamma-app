@@ -19,14 +19,14 @@ class Preacher {
   });
 
   factory Preacher.fromFirestore(DocumentSnapshot doc) {
-    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    final data = doc.data() as Map<String, dynamic>? ?? {};
     return Preacher(
       id: doc.id,
-      name: data['name'] ?? '',
-      description: data['description'] ?? '',
-      imageUrl: data['img_url'] ?? '',
-      link: data['link'],
-      dharmasanaUrl: data['dharmasana_url'],
+      name: data['name']?.toString() ?? '',
+      description: data['description']?.toString() ?? '',
+      imageUrl: data['img_url']?.toString() ?? '',
+      link: data['link']?.toString(),
+      dharmasanaUrl: data['dharmasana_url']?.toString(),
     );
   }
 }
